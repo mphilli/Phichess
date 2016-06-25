@@ -1,14 +1,14 @@
 # Create a representation of a chess board with multidimensional lists
-# import validator
+# import validator # to-be-fixed
 # import board_gen.create_board
 
 class Board:
     # global variables
-    global columns;
-    columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-    global rows;
-    rows = ['8', '7', '6', '5', '4', '3', '2', '1'];
-    global sofar;
+    global columns
+    columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+    global rows
+    rows = ['8', '7', '6', '5', '4', '3', '2', '1']
+    global sofar
     sofar = 0
 
     # global history; history = [];
@@ -39,7 +39,7 @@ class Board:
         return board2;
 
     def place_pieces(current_square):
-        piece = "  ";
+        piece = "  "
         # pawns: 
         if current_square.endswith("2"):
             piece = "♙ "  # white pawn
@@ -70,7 +70,7 @@ class Board:
                     rowlist.append('[' + square.replace(" ", "") + ']')
                 else:
                     rowlist[x] += ' [' + square.replace(" ", "") + ']'
-        board = rowlist;
+        board = rowlist
         return board;
 
     def modify_board(self, m_input):
@@ -116,8 +116,8 @@ class Board:
                    '♗': 'B', '♖': 'R', '♜': 'R', '♔': 'K', '♚': 'K',
                    '♛': 'Q', '♕': 'Q'}
         move = ""
-        piecename = piecename.replace("[", "");
-        piecename = piecename.replace("]", "");
+        piecename = piecename.replace("[", "")
+        piecename = piecename.replace("]", "")
         piece = english.get(piecename)
         move += piece
         if at_position != "[]": move += "x"
@@ -127,7 +127,7 @@ class Board:
 
     def view_board(self):
         print("")
-        columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+        columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
         for n in range(len(self.board)):
             print(str(len(self.board) - n) + self.board[n].replace("[]", "[  ]"))
         print("   ", end="")
@@ -136,14 +136,3 @@ class Board:
 
     def reset_board(self):
         self.board = Board.create_board(rows, columns)
-        history = [];
-
-
-'''
-evans_gambit = ['E2 E4', 'E7 E5', 'G1 F3', 'B8 C6', 'F1 C4', 'F8 C5', 'B2 B4']
-board = modify_board(create_board(rows, columns), evans_gambit)
-
-TO DO:
-* VALIDATE MOVES
-* ALGEBRAIC NOTATION INPUT 
-'''
