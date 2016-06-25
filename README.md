@@ -3,7 +3,8 @@ A(n unfinished) GUI for exploring chess openings as generated single file images
 
 Written in Python (3.4)
 
-![Example Session](Phichess_example.JPG =492x361)
+<img src="Phichess_example.JPG" width="492" height="361">
+
 
 Completed thus far: 
 * a main.py file for interacting with the program through a command line (view, reset, move, etc...).  
