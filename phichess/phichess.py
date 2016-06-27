@@ -1,15 +1,13 @@
 # Create a representation of a chess board with multidimensional lists
+
 import validator
-# import board_gen.create_board
 
 class Board:
     # global variables
-    global columns;
-    columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-    global rows;
-    rows = ['8', '7', '6', '5', '4', '3', '2', '1'];
-
-    # global history; history = [];
+    global columns
+    columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+    global rows
+    rows = ['8', '7', '6', '5', '4', '3', '2', '1']
 
     def __init__(self):
         self.board = Board.create_board(rows, columns)
@@ -125,8 +123,8 @@ class Board:
                    '♗': 'B', '♖': 'R', '♜': 'R', '♔': 'K', '♚': 'K',
                    '♛': 'Q', '♕': 'Q'}
         move = ""
-        piecename = piecename.replace("[", "");
-        piecename = piecename.replace("]", "");
+        piecename = piecename.replace("[", "")
+        piecename = piecename.replace("]", "")
         piece = english.get(piecename)
         move += piece
         if at_position != "[]":
@@ -137,7 +135,7 @@ class Board:
 
     def view_board(self):
         print("")
-        columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+        columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
         for n in range(len(self.board)):
             print(str(len(self.board) - n) + self.board[n].replace("[]", "[  ]"))
         print("   ", end="")
