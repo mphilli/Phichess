@@ -1,5 +1,5 @@
 # Create a representation of a chess board with multidimensional lists
-# import validator
+import validator
 # import board_gen.create_board
 
 class Board:
@@ -8,8 +8,6 @@ class Board:
     columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     global rows;
     rows = ['8', '7', '6', '5', '4', '3', '2', '1'];
-    global sofar;
-    sofar = 0
 
     # global history; history = [];
 
@@ -18,7 +16,8 @@ class Board:
         # self.history = history # records history of moves
         self.rows = rows
         self.columns = columns
-        self.sofar = sofar
+        self.sofar = 0
+        self.history = []
         # self.history = history
 
     def getBoard(self):
@@ -27,7 +26,7 @@ class Board:
         new_board.board = Board.create_board(rows, columns)
         new_board.board = Board.modify_board(self, history)
         '''
-        return self.board;
+        return self.board
 
     def getBoard2(self):
         # eliminates 'EN SPACE' (\u2002)
@@ -36,10 +35,10 @@ class Board:
             line2 = line.replace("\u2002", "    ")
             line2 = line2.replace("[]", "[    ]")
             board2.append(line2)
-        return board2;
+        return board2
 
     def place_pieces(current_square):
-        piece = "  ";
+        piece = "  "
         # pawns: 
         if current_square.endswith("2"):
             piece = "♙ "  # white pawn
@@ -70,8 +69,8 @@ class Board:
                     rowlist.append('[' + square.replace(" ", "") + ']')
                 else:
                     rowlist[x] += ' [' + square.replace(" ", "") + ']'
-        board = rowlist;
-        return board;
+        board = rowlist
+        return board
 
     def modify_board(self, m_input):
         if type(m_input) == list:
@@ -79,39 +78,49 @@ class Board:
         else:
             moves = m_input.split(", ")
         # notation = ""
-        global sofar
         assoc_row = {'1': '7', '2': '6', '3': '5', '4': '4',
                      '5': '3', '6': '2', '7': '1', '8': '0'}
         assoc_col = {'A': '0', 'B': '1', 'C': '2', 'D': '3',
                      'E': '4', 'F': '5', 'G': '6', 'H': '7'}
+        if moves == ["undo"]:
+            this_history = self.history
+            self.reset_board()
+            moves = this_history[0:len(this_history)-1]
         for move in moves:
-            if not " " in move: pass
-            # move = validator.find_piece(move, self.board, sofar)
-            # handle starting position
-            # history.append(move)
-            start_square = move.split()[0]
-            start_column = int(assoc_col.get(start_square[0]))
-            start_row = int(assoc_row.get(start_square[1]))
-            # print("piece: "+ board[start_row].split("  ")[start_column])
-            this_row = self.board[start_row].split(" ")
-            piece = this_row[start_column]
-            this_row[start_column] = '[]'
-            self.board[start_row] = ' '.join(this_row)
+            if not " " in move:
+                # convert to smith notation
+                move = validator.find_piece(move, self.board, self.sofar)
+            if type(move) == list:
+                self.modify_board(move)
+            else:
+                self.history.append(move)
+                start_square = move.split()[0]
+                if start_square == "ERROR":
+                    return self.board
+                else:
+                    start_column = int(assoc_col.get(start_square[0]))
+                    start_row = int(assoc_row.get(start_square[1]))
+                    # print("piece: "+ board[start_row].split("  ")[start_column])
+                    this_row = self.board[start_row].split(" ")
+                    piece = this_row[start_column]
+                    this_row[start_column] = '[]'
+                    self.board[start_row] = ' '.join(this_row)
 
-            # handle ending position
-            end_square = move.split()[1]
-            end_column = int(assoc_col.get(end_square[0]))
-            end_row = int(assoc_row.get(end_square[1]))
-            this_row = self.board[end_row].split(" ")
-            # notation += generate_notation(piece, start_square, end_square, this_row[end_column])
-            this_row[end_column] = piece
-            self.board[end_row] = ' '.join(this_row)
+                    # handle ending position
+                    end_square = move.split()[1]
+                    end_column = int(assoc_col.get(end_square[0]))
+                    end_row = int(assoc_row.get(end_square[1]))
+                    this_row = self.board[end_row].split(" ")
 
-            sofar += 1
-        # print(notation)
+                    this_row[end_column] = piece
+                    self.board[end_row] = ' '.join(this_row)
+
+                    self.sofar += 1
         return self.board;
 
     def generate_notation(piecename, start_square, end_square, at_position):
+        """Converts Smith Notation to PNG"""
+        # notation += generate_notation(piece, start_square, end_square, this_row[end_column])
         english = {'♙': "", '♟': "", '♘': 'N', '♞': 'N', '♝': 'B',
                    '♗': 'B', '♖': 'R', '♜': 'R', '♔': 'K', '♚': 'K',
                    '♛': 'Q', '♕': 'Q'}
@@ -120,7 +129,8 @@ class Board:
         piecename = piecename.replace("]", "");
         piece = english.get(piecename)
         move += piece
-        if at_position != "[]": move += "x"
+        if at_position != "[]":
+            move += "x"
         destination = end_square.lower()
         move += destination
         return move + " ";
@@ -136,14 +146,9 @@ class Board:
 
     def reset_board(self):
         self.board = Board.create_board(rows, columns)
-        history = [];
+        self.sofar = 0
+        self.history = []
 
-
-'''
-evans_gambit = ['E2 E4', 'E7 E5', 'G1 F3', 'B8 C6', 'F1 C4', 'F8 C5', 'B2 B4']
-board = modify_board(create_board(rows, columns), evans_gambit)
-
-TO DO:
-* VALIDATE MOVES
-* ALGEBRAIC NOTATION INPUT 
-'''
+if __name__ == "__main__":
+    # for testing
+    pass
