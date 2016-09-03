@@ -52,8 +52,8 @@ class Board:
         if current_square in black_end:
             piece = black_end.get(current_square)
 
-        # if piece == "  ": piece = current_square; 
-        return piece;
+        # if piece == "  ": piece = current_square
+        return piece
 
     def create_board(rows, columns):
         rowlist = []
@@ -114,7 +114,7 @@ class Board:
                     self.board[end_row] = ' '.join(this_row)
 
                     self.sofar += 1
-        return self.board;
+        return self.board
 
     def generate_notation(piecename, start_square, end_square, at_position):
         """Converts Smith Notation to PNG"""
@@ -131,7 +131,7 @@ class Board:
             move += "x"
         destination = end_square.lower()
         move += destination
-        return move + " ";
+        return move + " "
 
     def view_board(self):
         print("")
