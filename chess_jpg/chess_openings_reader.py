@@ -2,16 +2,15 @@
 
 import re
 
-file = open("chess_openings_list2.txt", "r+")
-lines = file.readlines()
-newf = open("chess_openings_list.txt", "w+")
-for line in lines:
-    newf.write(line)
-
-file.close()
-newf.close()
-
-
+def file_gen():
+	
+	file = open("chess_openings_list2.txt", "r+")
+	lines = file.readlines()
+	newf = open("chess_openings_list.txt", "w+")
+	for line in lines:
+	    newf.write(line)
+	file.close()
+	newf.close()
 
 def initial_organizer():
 
@@ -59,5 +58,3 @@ def initial_organizer():
 		#print(item + sequences[opening_names.index(item)])
 		new_file.write(item + " - " + sequences[opening_names.index(item)] + "\n")
 	new_file.close()
-
-        
