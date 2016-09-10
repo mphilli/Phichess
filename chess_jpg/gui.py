@@ -98,11 +98,6 @@ class PhichessApplication(Frame):
         self.copy_button.grid(row=2, column = 1, sticky ="ens")
 
     def reset(self):
-        image = Image.open("chess_pieces/starting_board.jpg")
-        photo = ImageTk.PhotoImage(image)
-        self.image_label = Label(self, image=photo)
-        self.image_label.grid(row=0, column=1)
-        self.image_label.image = photo
         self.b.reset_board()
         self.seq_label['text'] = ""
         self.command.delete(0, END)
@@ -112,6 +107,10 @@ class PhichessApplication(Frame):
         openings = get_openings()
         for item in openings:
             self.listbox.insert(END, item)
+        image = Image.open("chess_pieces/starting_board.jpg")
+        photo = ImageTk.PhotoImage(image)
+        self.image_label['image'] = photo
+        self.image_label.image = photo
 
     def cipher(self):
         moves = self.command.get()
