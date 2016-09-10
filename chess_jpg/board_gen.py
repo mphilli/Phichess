@@ -33,18 +33,6 @@ def generate_board(board):
     WP = Image.open('chess_pieces/WP.png', 'r')
     WP = WP.resize((80,80), Image.ANTIALIAS)
     
-    # some openings
-    # print("Sicilian Defense (Dragon Variation): ")
-    '''
-    print("Evans Gambit: ")
-    sicilian_dragon = ['E2 E4', 'C7 C5', 'G1 F3', 'D7 D6', 'D2 D4', 'C5 D4', 'F3 D4', 'G8 F6', 'B1 C3', 'G7 G6']
-    ruy_lopez = ['E2 E4','E7 E5', 'G1 F3', 'B8 C6', 'F1 B5']
-    evans_gambit = ['E2 E4', 'E7 E5', 'G1 F3', 'B8 C6', 'F1 C4', 'F8 C5', 'B2 B4']
-    board.modify_board(evans_gambit)
-    board.view_board()
-    # phichess.view_board(board)
-    '''
-
     A = round(width * 0.013) 
     B = round(width * .1383) 
     C = round(width * .2633) 
@@ -64,9 +52,9 @@ def generate_board(board):
     R8 = round(height * 0.88)
     
     row_ = {0: R1, 1: R2, 2: R3, 3: R4,
-                 4: R5, 5: R6, 6: R7, 7: R8}
+            4: R5, 5: R6, 6: R7, 7: R8}
     col_ = {0: A, 1: B, 2: C, 3: D,
-                    4: E, 5: F, 6: G, 7: H}
+            4: E, 5: F, 6: G, 7: H}
     
     b1 = board.getBoard()
     for x in range(len(b1)):
@@ -98,7 +86,3 @@ def generate_board(board):
                 im.paste(WK, (col_.get(y), row_.get(x)), WK) 
             else: pass
     return im;
-
-#generate_board(im, width, height)
-#im.show()
-#im.save("last_position_save.jpg")
